@@ -4,15 +4,14 @@ import React, { useRef } from "react";
 const AddUser = () => {
   const nameref = useRef();
   const emailref = useRef();
-
+  const name = nameref.current.value;
+  const email = emailref.current.value;
   const clearInputs = () => {
     nameref.current.value = "";
     emailref.current.value = "";
   };
 
   const handleAddUser = async () => {
-    const name = nameref.current.value;
-    const email = emailref.current.value;
     try {
       let response = await fetch("/api/user", {
         method: "POST",
