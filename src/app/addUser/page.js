@@ -1,6 +1,6 @@
 "use client";
+import Link from "next/link";
 import React, { useRef } from "react";
-
 const AddUser = () => {
   const nameref = useRef();
   const emailref = useRef();
@@ -60,6 +60,11 @@ const AddUser = () => {
         >
           ➕ Add User
         </button>
+            <button
+            className="bg-green-600 w-full text-white py-2 rounded-lg hover:bg-green-700 transition"
+          >
+            <Link href="/getUser">👁️ See Users</Link>
+          </button>
       </div>
     </div>
   );
