@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 
 export async function GET(request) {
   const users = await prisma.user.findMany();
-  return Response.json({ users, success: true });
+  return Response.json({ users, success: true ,status:200});
 }
 
 export async function POST(request) {
