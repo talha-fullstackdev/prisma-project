@@ -16,6 +16,31 @@ const GetUser = () => {
     };
     handleGetUser();
   }, []);
+////////////////////////////// delete user
+  const handledelete =async(id) =>{
+    try{
+      let deleteUser = await fetch("/api/user",{
+        method:"DELETE",
+        body:JSON.stringify({id})
+      })
+      deleteUser= await deleteUser.json()
+      if(deleteUser){
+        window.location.reload()
+       return alert("user deleted succesfully")
+      }
+      if(!deleteUser){
+        return alert("failed to delete!")
+      }
+
+     
+    }catch(err){
+      console.error("server side error occured",err)
+    }
+  }
+////////////////////////////// delete user
+
+
+     
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
@@ -27,20 +52,21 @@ const GetUser = () => {
         <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
           <thead className="bg-gray-200 text-gray-700 uppercase text-sm">
             <tr>
-              <th className="py-3 px-6 text-left">#</th>
+              <th className="py-3 px-6 text-left">#ID</th>
               <th className="py-3 px-6 text-left">Name</th>
               <th className="py-3 px-6 text-left">Email</th>
               <th className="py-3 px-6 text-left">Created At</th>
               <th className="py-3 px-6 text-left">Updated At</th>
+              <th className="py-3 px-6 text-left">remove</th>
             </tr>
           </thead>
           <tbody>
             {[...data].reverse().map((user, index) => (
               <tr
                 key={index}
-                className="border-t border-gray-200 hover:bg-gray-50 transition"
+                className="border-t border-gray-200"
               >
-                <td className="py-3 px-6">{index + 1}</td>
+                <td className="py-3 px-6">{user.id}</td>
                 <td className="py-3 px-6">{user.name}</td>
                 <td className="py-3 px-6">{user.email}</td>
                 <td className="py-3 px-6">
@@ -48,6 +74,9 @@ const GetUser = () => {
                 </td>
                 <td className="py-3 px-6">
                   {new Date(user.updatedAT).toLocaleString()}
+                </td>
+                <td className="py-3 px-6 ">
+                  <button onClick={()=>handledelete(user.id)} className="text-red-700 hover:opacity-[0.7] cursor-pointer">Delete</button>
                 </td>
               </tr>
             ))}

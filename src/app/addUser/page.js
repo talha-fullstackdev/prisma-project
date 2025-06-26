@@ -4,14 +4,15 @@ import React, { useRef } from "react";
 const AddUser = () => {
   const nameref = useRef();
   const emailref = useRef();
-  const name = nameref.current.value;
-  const email = emailref.current.value;
+
   const clearInputs = () => {
     nameref.current.value = "";
     emailref.current.value = "";
   };
 
   const handleAddUser = async () => {
+    const name = nameref.current.value;
+    const email = emailref.current.value;
     try {
       let response = await fetch("/api/user", {
         method: "POST",
@@ -19,17 +20,20 @@ const AddUser = () => {
         body: JSON.stringify({ name, email }),
       });
       response = await response.json();
-      clearInputs();
       if (response.success || response.id) {
         alert("✅ User added successfully!");
+        clearInputs();
+
       } else {
-        alert("❌ Failed to add user.");
+        alert(`${response.msg}`);
+        emailref.current.value = "";
+
       }
     } catch (err) {
       console.error("Server side error occurred", err);
     }
-  };
 
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-md space-y-6">
